@@ -15,6 +15,8 @@ FunctionBody :
 
 ## 生成規則
 
+関数定義の生成規則
+
 ```
 FunctionDeclaration : function Identifier ( FormalParameterListopt ) { FunctionBody }
 ```
@@ -23,15 +25,55 @@ FunctionDeclaration : function Identifier ( FormalParameterListopt ) { FunctionB
 
 ## 生成規則
 
+関数命名の生成規則
+
 ```
 FunctionExpression : function ( FormalParameterListopt ) { FunctionBody }
 ```
 
+* FormalParameterListoptで指定される引数+FunctionBodyで指定される本体とで新しいFunctionオブジェクトを生成した結果を返す
+* Scopeとして実行中コンテキストのレキシカル環境を渡す
+* strictコード内にFunctionExpressionが含まれる or FunctionBodyがstrictコードであればStrictフラグ true
+
 ## 生成規則
+
+関数命名の生成規則
 
 ```
 FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBody }
 ```
+
+6つのプロセスを経て評価される
+
+1. 実行中コンテキストのレキシカル環境を引数として渡す
+2. envRecをfuncEnvの環境レコードとする
+3. IdentifierのString値が引数のenvRecのCreateImmutableBinding具象メソッド呼び出し
+4. 以下の流れ
+	1. FormalParameterListoptで指定される引数+FunctionBodyで指定される本体とで新しいFunctionオブジェクトを生成した結果を返す
+	2. Scopeとして実行中コンテキストのレキシカル環境を渡す
+	3. strictコード内にFunctionExpressionが含まれる or FunctionBodyがstrictコードであればStrictフラグ true
+5. IdentifierのString値とclosureが引数のenvRecのCreateImmutableBinding具象メソッド呼び出し
+6. closureを返す
+
+### 注釈
+
+* 再帰呼出しが可能なのようにFunctionExpressionの識別子はFunctionExpressionのFunctionBody内から参照されうる
+* FunctionExpression内のIdentifierはFunctionExpressionを取り囲むスコープからは参照されない
+
+## 生成規則
+
+ソースコードの生成規則
+
+```
+FunctionBody : SourceElementsopt
+```
+
+1. ソースコードの評価基準
+	1. strictモードコードが含まれていたらstrictモードコードになる
+	2. strictモードコードであるなら次のステップはstrictモードコード
+	3. そうでないなら次のステップは非strictモードコード
+2. SourceElementsが存在するならSourceElementsの評価結果
+3. それ以外の場合は(normal,undefined,empty)
 
 # 13.1 strictモードの制限
 
@@ -41,6 +83,8 @@ FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBo
 
 * FunctionParameterListによって指定されるオプションの引数リスト、FunctionBodyによって指定されるbody Scopeによって指定されるレキシカル環境、BooleanフラグStrictが与えられると、Functionオブジェクトが構築される
 * 20くらいプロセスがある
+
++ 
 
 # 13.2.1 [[Call]]
 
