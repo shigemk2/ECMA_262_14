@@ -221,8 +221,22 @@ FunctionBody :
 <h2>13.2.3 [[ThrowTypeError]]</h2>
 
 <ul>
-<li>[[ThrowTypeError]]オブジェクトは以下のように一度だけ定義される唯一の関数オブジェクトである</li>
+<li><p>[[ThrowTypeError]]オブジェクトは以下のように一度だけ定義される唯一の関数オブジェクトである</p></li>
 </ul>
+
+<ol>
+<li>FをネイティブECMASriptオブジェクト</li>
+<li>Fの内部メソッド設定 (8.12)</li>
+<li>Fの[[Class]]内部プロパティをFunctionに設定</li>
+<li>Fの[[Prototype]]設定 (15.3.3.1)</li>
+<li>Fの[[Call]]設定 (13.2.1)</li>
+<li>Fの[[Scope]]をグローバル環境</li>
+<li>Fの[[FormalParameters]]を空のリスト</li>
+<li>Fの[[Code]]を無条件にTypeError例外をスローしてそれ以外は何もしないFunctionBodyに設定</li>
+<li>Fの[[DefineOwnProperty]]の呼び出し({[[Value]]: 0, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false}, false)</li>
+<li>Fの[[Extensible]]をfalse</li>
+<li>[[ThrowTypeError]]をF</li>
+</ol>
                     </div>
                   </div>
                 </div>
