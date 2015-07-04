@@ -37,3 +37,20 @@ FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBo
 
 * strictモードのFunctionDeclarationまたはFunctionExpressionのFormalParameterList内にIdentifierが2回以上現れる場合は、SyntaxError
 
+# 13.2 Functionオブジェクトの生成
+
+* FunctionParameterListによって指定されるオプションの引数リスト、FunctionBodyによって指定されるbody Scopeによって指定されるレキシカル環境、BooleanフラグStrictが与えられると、Functionオブジェクトが構築される
+* 20くらいプロセスがある
+
+# 13.2.1 [[Call]]
+
+* FunctionオブジェクトFに対する[[Call]]内部メソッドがthis値と引数のリストとともに呼び出されると、以下のステップが実行
+
+# 13.2.2 [[Construct]]
+
+* FunctionオブジェクトFに対する[[Construct]]内部メソッドが空となる可能性のある引数リストとともに呼び出されると、以下のステップが実行
+
+# 13.2.3 [[ThrowTypeError]]
+
+* [[ThrowTypeError]]オブジェクトは以下のように一度だけ定義される唯一の関数オブジェクトである
+
