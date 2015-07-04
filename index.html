@@ -202,8 +202,21 @@ FunctionBody :
 <h2>13.2.2 [[Construct]]</h2>
 
 <ul>
-<li>FunctionオブジェクトFに対する[[Construct]]内部メソッドが空となる可能性のある引数リストとともに呼び出されると、以下のステップが実行</li>
+<li><p>FunctionオブジェクトFに対する[[Construct]]内部メソッドが空となる可能性のある引数リストとともに呼び出されると、以下のステップが実行</p></li>
 </ul>
+
+<ol>
+<li>objをネイティブECMASriptオブジェクトとする</li>
+<li>objの内部メソッド設定 (8.12)</li>
+<li>objの[[Class]]内部プロパティをObjectに設定</li>
+<li>objの[[Extensible]]をtrue</li>
+<li>protoをFの[[Get]]内部プロパティを設定</li>
+<li>Type(proto)がObjectなら[[Prototype]]内部プロパティをprotoにする</li>
+<li>Type(proto)がObjectでなければ[[Prototype]]内部プロパティをプロトタイプオブジェクトにする (15.2.4)</li>
+<li>objをthis値として与えて、resultをFの[[Call]]内部プロパティを呼び出した結果とする</li>
+<li>Type(result)がObjectならreturnを返す</li>
+<li>objを返す</li>
+</ol>
 
 <h2>13.2.3 [[ThrowTypeError]]</h2>
 
