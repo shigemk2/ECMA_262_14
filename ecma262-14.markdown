@@ -1,0 +1,39 @@
+ # 13 関数定義
+## 構文
+
+```
+FunctionDeclaration :
+	function Identifier ( FormalParameterListopt ) { FunctionBody }
+FunctionExpression :
+	function Identifieropt ( FormalParameterListopt ) { FunctionBody }
+FormalParameterList :
+	Identifier
+	FormalParameterList , Identifier
+FunctionBody :
+	SourceElementsopt
+```
+
+## 生成規則
+
+```
+FunctionDeclaration : function Identifier ( FormalParameterListopt ) { FunctionBody }
+```
+
+1. FormalParameterListoptで指定される引数とFunctionBodyで指定される本体とともに13.2で示されるように新しいFunctionオブジェクトを生成した結果を返す。Scopeとして実行中の実行コンテキストのVariableEnvironmentを渡す。strictコード内にFunctionDeclarationが含まれるか、FunctionBodyがstrictコードであればStrictフラグとしてtrueを返す
+
+## 生成規則
+
+```
+FunctionExpression : function ( FormalParameterListopt ) { FunctionBody }
+```
+
+## 生成規則
+
+```
+FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBody }
+```
+
+# 13.1 strictモードの制限
+
+* strictモードのFunctionDeclarationまたはFunctionExpressionのFormalParameterList内にIdentifierが2回以上現れる場合は、SyntaxError
+
