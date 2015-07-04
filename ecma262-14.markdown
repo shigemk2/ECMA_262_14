@@ -82,9 +82,31 @@ FunctionBody : SourceElementsopt
 # 13.2 Functionオブジェクトの生成
 
 * FunctionParameterListによって指定されるオプションの引数リスト、FunctionBodyによって指定されるbody Scopeによって指定されるレキシカル環境、BooleanフラグStrictが与えられると、Functionオブジェクトが構築される
-* 20くらいプロセスがある
+* 20くらいプロセスがあるのでなんか長い
 
-+ 
+1. ネイティブECMAScriptオブジェクトFを作成
+2. Fの内部メソッド設定 (8.12)
+3. Fの[[Class]]内部プロパティをFunctionに設定
+4. Fの[[Prototype]]設定 (15.3.3.1)
+5. Fの[[Get]]設定 (15.3.5.4)
+6. Fの[[Call]]設定 (15.2.1)
+7. Fの[[Construct]]設定 (15.2.2)
+8. Fの[[HasInstance]]設定 (15.3.5.3)
+9. Fの[[Scope]]設定
+10. namesを左から右へのListとする。パラメータがないなら空リスト
+11. Fの[[FormalParameters]]をnamesに設定
+12. Fの[[Code]]をFunctionBodyに設定
+13. Fの[[Extensible]]をtrue
+14. lenをパラメータの数にする 0でも可
+15. Fの[[DefineOwnProperty]]の呼び出し({[[Value]]: len, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false}, false)
+16. new Object()で新しいオブジェクトprotoを生成する
+17. protoの[[DefineOwnProperty]]の呼び出し({[[Value]]: F, { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}, false)
+18. Fの[[DefineOwnProperty]]の呼び出し({[[Value]]: proto, { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: false}, false)
+19. strictがtrueだったら以下をやる
+	1. throwerを[[ThrowTypeError]]にする
+	2. Fの[[DefineOwnProperty]]の呼び出し({[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false}, false)
+	3. Fの[[DefineOwnProperty]]の呼び出し({[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false}, false)
+20. Fを返す
 
 # 13.2.1 [[Call]]
 
