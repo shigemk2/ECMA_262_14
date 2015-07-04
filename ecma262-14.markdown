@@ -112,6 +112,14 @@ FunctionBody : SourceElementsopt
 
 * FunctionオブジェクトFに対する[[Call]]内部メソッドがthis値と引数のリストとともに呼び出されると、以下のステップが実行
 
+1. funcCtxを関数コードに対する新たな実行コンテキストを設置した結果とする
+2. resultをFunctionBodyを評価した結果とする
+	1. [[Code]]内部プロパティがない、空のFunctionBodyなら(normal,undefined,empty)
+3. 実行コンテキスト復元
+4. result.type throwならresult.valueをスロー
+5. result.type returnならresult.valueを返す
+6. でなければresult.typeはnormalでなければならず、undefinedを返す
+
 # 13.2.2 [[Construct]]
 
 * FunctionオブジェクトFに対する[[Construct]]内部メソッドが空となる可能性のある引数リストとともに呼び出されると、以下のステップが実行
