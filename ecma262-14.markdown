@@ -139,3 +139,14 @@ FunctionBody : SourceElementsopt
 
 * [[ThrowTypeError]]オブジェクトは以下のように一度だけ定義される唯一の関数オブジェクトである
 
+1. FをネイティブECMASriptオブジェクト
+2. Fの内部メソッド設定 (8.12)
+3. Fの[[Class]]内部プロパティをFunctionに設定
+4. Fの[[Prototype]]設定 (15.3.3.1)
+5. Fの[[Call]]設定 (13.2.1)
+6. Fの[[Scope]]をグローバル環境
+7. Fの[[FormalParameters]]を空のリスト
+8. Fの[[Code]]を無条件にTypeError例外をスローしてそれ以外は何もしないFunctionBodyに設定
+9. Fの[[DefineOwnProperty]]の呼び出し({[[Value]]: 0, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false}, false)
+10. Fの[[Extensible]]をfalse
+11. [[ThrowTypeError]]をF
