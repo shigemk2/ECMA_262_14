@@ -62,6 +62,8 @@ FunctionBody :
 
 <h2>生成規則</h2>
 
+<p>関数定義の生成規則</p>
+
 <pre><code>FunctionDeclaration : function Identifier ( FormalParameterListopt ) { FunctionBody }
 </code></pre>
 
@@ -71,13 +73,68 @@ FunctionBody :
 
 <h2>生成規則</h2>
 
+<p>関数命名の生成規則</p>
+
 <pre><code>FunctionExpression : function ( FormalParameterListopt ) { FunctionBody }
 </code></pre>
 
+<ul>
+<li>FormalParameterListoptで指定される引数+FunctionBodyで指定される本体とで新しいFunctionオブジェクトを生成した結果を返す</li>
+<li>Scopeとして実行中コンテキストのレキシカル環境を渡す</li>
+<li>strictコード内にFunctionExpressionが含まれる or FunctionBodyがstrictコードであればStrictフラグ true</li>
+</ul>
+
 <h2>生成規則</h2>
+
+<p>関数命名の生成規則</p>
 
 <pre><code>FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBody }
 </code></pre>
+
+<p>6つのプロセスを経て評価される</p>
+
+<ol>
+<li>実行中コンテキストのレキシカル環境を引数として渡す</li>
+<li>envRecをfuncEnvの環境レコードとする</li>
+<li>IdentifierのString値が引数のenvRecのCreateImmutableBinding具象メソッド呼び出し</li>
+<li>以下の流れ
+
+<ol>
+<li>FormalParameterListoptで指定される引数+FunctionBodyで指定される本体とで新しいFunctionオブジェクトを生成した結果を返す</li>
+<li>Scopeとして実行中コンテキストのレキシカル環境を渡す</li>
+<li>strictコード内にFunctionExpressionが含まれる or FunctionBodyがstrictコードであればStrictフラグ true</li>
+</ol>
+</li>
+<li>IdentifierのString値とclosureが引数のenvRecのCreateImmutableBinding具象メソッド呼び出し</li>
+<li>closureを返す</li>
+</ol>
+
+<h3>注釈</h3>
+
+<ul>
+<li>再帰呼出しが可能なのようにFunctionExpressionの識別子はFunctionExpressionのFunctionBody内から参照されうる</li>
+<li>FunctionExpression内のIdentifierはFunctionExpressionを取り囲むスコープからは参照されない</li>
+</ul>
+
+<h2>生成規則</h2>
+
+<p>ソースコードの生成規則</p>
+
+<pre><code>FunctionBody : SourceElementsopt
+</code></pre>
+
+<ol>
+<li>ソースコードの評価基準
+
+<ol>
+<li>strictモードコードが含まれていたらstrictモードコードになる</li>
+<li>strictモードコードであるなら次のステップはstrictモードコード</li>
+<li>そうでないなら次のステップは非strictモードコード</li>
+</ol>
+</li>
+<li>SourceElementsが存在するならSourceElementsの評価結果</li>
+<li>それ以外の場合は(normal,undefined,empty)</li>
+</ol>
 
 <h1>13.1 strictモードの制限</h1>
 
@@ -89,8 +146,38 @@ FunctionBody :
 
 <ul>
 <li>FunctionParameterListによって指定されるオプションの引数リスト、FunctionBodyによって指定されるbody Scopeによって指定されるレキシカル環境、BooleanフラグStrictが与えられると、Functionオブジェクトが構築される</li>
-<li>20くらいプロセスがある</li>
+<li><p>20くらいプロセスがあるのでなんか長い</p></li>
 </ul>
+
+<ol>
+<li>ネイティブECMAScriptオブジェクトFを作成</li>
+<li>Fの内部メソッド設定 (8.12)</li>
+<li>Fの[[Class]]内部プロパティをFunctionに設定</li>
+<li>Fの[[Prototype]]設定 (15.3.3.1)</li>
+<li>Fの[[Get]]設定 (15.3.5.4)</li>
+<li>Fの[[Call]]設定 (15.2.1)</li>
+<li>Fの[[Construct]]設定 (15.2.2)</li>
+<li>Fの[[HasInstance]]設定 (15.3.5.3)</li>
+<li>Fの[[Scope]]設定</li>
+<li>namesを左から右へのListとする。パラメータがないなら空リスト</li>
+<li>Fの[[FormalParameters]]をnamesに設定</li>
+<li>Fの[[Code]]をFunctionBodyに設定</li>
+<li>Fの[[Extensible]]をtrue</li>
+<li>lenをパラメータの数にする 0でも可</li>
+<li>Fの[[DefineOwnProperty]]の呼び出し({[[Value]]: len, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false}, false)</li>
+<li>new Object()で新しいオブジェクトprotoを生成する</li>
+<li>protoの[[DefineOwnProperty]]の呼び出し({[[Value]]: F, { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}, false)</li>
+<li>Fの[[DefineOwnProperty]]の呼び出し({[[Value]]: proto, { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: false}, false)</li>
+<li>strictがtrueだったら以下をやる
+
+<ol>
+<li>throwerを[[ThrowTypeError]]にする</li>
+<li>Fの[[DefineOwnProperty]]の呼び出し({[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false}, false)</li>
+<li>Fの[[DefineOwnProperty]]の呼び出し({[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false}, false)</li>
+</ol>
+</li>
+<li>Fを返す</li>
+</ol>
 
 <h1>13.2.1 [[Call]]</h1>
 
