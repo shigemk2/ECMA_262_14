@@ -124,6 +124,17 @@ FunctionBody : SourceElementsopt
 
 * FunctionオブジェクトFに対する[[Construct]]内部メソッドが空となる可能性のある引数リストとともに呼び出されると、以下のステップが実行
 
+1. objをネイティブECMASriptオブジェクトとする
+2. objの内部メソッド設定 (8.12)
+3. objの[[Class]]内部プロパティをObjectに設定
+4. objの[[Extensible]]をtrue
+5. protoをFの[[Get]]内部プロパティを設定
+6. Type(proto)がObjectなら[[Prototype]]内部プロパティをprotoにする
+7. Type(proto)がObjectでなければ[[Prototype]]内部プロパティをプロトタイプオブジェクトにする (15.2.4)
+8. objをthis値として与えて、resultをFの[[Call]]内部プロパティを呼び出した結果とする
+9. Type(result)がObjectならreturnを返す
+10. objを返す
+
 ## 13.2.3 [[ThrowTypeError]]
 
 * [[ThrowTypeError]]オブジェクトは以下のように一度だけ定義される唯一の関数オブジェクトである
