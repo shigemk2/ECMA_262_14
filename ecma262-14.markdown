@@ -1,5 +1,5 @@
 # 13 関数定義
-## 構文
+### 構文
 
 ```
 FunctionDeclaration :
@@ -13,7 +13,7 @@ FunctionBody :
 	SourceElementsopt
 ```
 
-## 生成規則
+### 生成規則
 
 関数定義の生成規則
 
@@ -23,7 +23,7 @@ FunctionDeclaration : function Identifier ( FormalParameterListopt ) { FunctionB
 
 1. FormalParameterListoptで指定される引数とFunctionBodyで指定される本体とともに13.2で示されるように新しいFunctionオブジェクトを生成した結果を返す。Scopeとして実行中の実行コンテキストのVariableEnvironmentを渡す。strictコード内にFunctionDeclarationが含まれるか、FunctionBodyがstrictコードであればStrictフラグとしてtrueを返す
 
-## 生成規則
+### 生成規則
 
 関数命名の生成規則
 
@@ -35,7 +35,7 @@ FunctionExpression : function ( FormalParameterListopt ) { FunctionBody }
 * Scopeとして実行中コンテキストのレキシカル環境を渡す
 * strictコード内にFunctionExpressionが含まれる or FunctionBodyがstrictコードであればStrictフラグ true
 
-## 生成規則
+### 生成規則
 
 関数命名の生成規則
 
@@ -55,12 +55,12 @@ FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBo
 5. IdentifierのString値とclosureが引数のenvRecのCreateImmutableBinding具象メソッド呼び出し
 6. closureを返す
 
-### 注釈
+#### 注釈
 
 * 再帰呼出しが可能なのようにFunctionExpressionの識別子はFunctionExpressionのFunctionBody内から参照されうる
 * FunctionExpression内のIdentifierはFunctionExpressionを取り囲むスコープからは参照されない
 
-## 生成規則
+### 生成規則
 
 ソースコードの生成規則
 
@@ -75,11 +75,11 @@ FunctionBody : SourceElementsopt
 2. SourceElementsが存在するならSourceElementsの評価結果
 3. それ以外の場合は(normal,undefined,empty)
 
-# 13.1 strictモードの制限
+## 13.1 strictモードの制限
 
 * strictモードのFunctionDeclarationまたはFunctionExpressionのFormalParameterList内にIdentifierが2回以上現れる場合は、SyntaxError
 
-# 13.2 Functionオブジェクトの生成
+## 13.2 Functionオブジェクトの生成
 
 * FunctionParameterListによって指定されるオプションの引数リスト、FunctionBodyによって指定されるbody Scopeによって指定されるレキシカル環境、BooleanフラグStrictが与えられると、Functionオブジェクトが構築される
 * 20くらいプロセスがあるのでなんか長い
@@ -108,7 +108,7 @@ FunctionBody : SourceElementsopt
 	3. Fの[[DefineOwnProperty]]の呼び出し({[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false}, false)
 20. Fを返す
 
-# 13.2.1 [[Call]]
+## 13.2.1 [[Call]]
 
 * FunctionオブジェクトFに対する[[Call]]内部メソッドがthis値と引数のリストとともに呼び出されると、以下のステップが実行
 
@@ -120,11 +120,11 @@ FunctionBody : SourceElementsopt
 5. result.type returnならresult.valueを返す
 6. でなければresult.typeはnormalでなければならず、undefinedを返す
 
-# 13.2.2 [[Construct]]
+## 13.2.2 [[Construct]]
 
 * FunctionオブジェクトFに対する[[Construct]]内部メソッドが空となる可能性のある引数リストとともに呼び出されると、以下のステップが実行
 
-# 13.2.3 [[ThrowTypeError]]
+## 13.2.3 [[ThrowTypeError]]
 
 * [[ThrowTypeError]]オブジェクトは以下のように一度だけ定義される唯一の関数オブジェクトである
 

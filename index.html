@@ -47,7 +47,7 @@
                     <div class="comment-body markdown-body markdown-format">
                       <h1>13 関数定義</h1>
 
-<h2>構文</h2>
+<h3>構文</h3>
 
 <pre><code>FunctionDeclaration :
     function Identifier ( FormalParameterListopt ) { FunctionBody }
@@ -60,7 +60,7 @@ FunctionBody :
     SourceElementsopt
 </code></pre>
 
-<h2>生成規則</h2>
+<h3>生成規則</h3>
 
 <p>関数定義の生成規則</p>
 
@@ -71,7 +71,7 @@ FunctionBody :
 <li>FormalParameterListoptで指定される引数とFunctionBodyで指定される本体とともに13.2で示されるように新しいFunctionオブジェクトを生成した結果を返す。Scopeとして実行中の実行コンテキストのVariableEnvironmentを渡す。strictコード内にFunctionDeclarationが含まれるか、FunctionBodyがstrictコードであればStrictフラグとしてtrueを返す</li>
 </ol>
 
-<h2>生成規則</h2>
+<h3>生成規則</h3>
 
 <p>関数命名の生成規則</p>
 
@@ -84,7 +84,7 @@ FunctionBody :
 <li>strictコード内にFunctionExpressionが含まれる or FunctionBodyがstrictコードであればStrictフラグ true</li>
 </ul>
 
-<h2>生成規則</h2>
+<h3>生成規則</h3>
 
 <p>関数命名の生成規則</p>
 
@@ -109,14 +109,14 @@ FunctionBody :
 <li>closureを返す</li>
 </ol>
 
-<h3>注釈</h3>
+<h4>注釈</h4>
 
 <ul>
 <li>再帰呼出しが可能なのようにFunctionExpressionの識別子はFunctionExpressionのFunctionBody内から参照されうる</li>
 <li>FunctionExpression内のIdentifierはFunctionExpressionを取り囲むスコープからは参照されない</li>
 </ul>
 
-<h2>生成規則</h2>
+<h3>生成規則</h3>
 
 <p>ソースコードの生成規則</p>
 
@@ -136,13 +136,13 @@ FunctionBody :
 <li>それ以外の場合は(normal,undefined,empty)</li>
 </ol>
 
-<h1>13.1 strictモードの制限</h1>
+<h2>13.1 strictモードの制限</h2>
 
 <ul>
 <li>strictモードのFunctionDeclarationまたはFunctionExpressionのFormalParameterList内にIdentifierが2回以上現れる場合は、SyntaxError</li>
 </ul>
 
-<h1>13.2 Functionオブジェクトの生成</h1>
+<h2>13.2 Functionオブジェクトの生成</h2>
 
 <ul>
 <li>FunctionParameterListによって指定されるオプションの引数リスト、FunctionBodyによって指定されるbody Scopeによって指定されるレキシカル環境、BooleanフラグStrictが与えられると、Functionオブジェクトが構築される</li>
@@ -179,19 +179,33 @@ FunctionBody :
 <li>Fを返す</li>
 </ol>
 
-<h1>13.2.1 [[Call]]</h1>
+<h2>13.2.1 [[Call]]</h2>
 
 <ul>
-<li>FunctionオブジェクトFに対する[[Call]]内部メソッドがthis値と引数のリストとともに呼び出されると、以下のステップが実行</li>
+<li><p>FunctionオブジェクトFに対する[[Call]]内部メソッドがthis値と引数のリストとともに呼び出されると、以下のステップが実行</p></li>
 </ul>
 
-<h1>13.2.2 [[Construct]]</h1>
+<ol>
+<li>funcCtxを関数コードに対する新たな実行コンテキストを設置した結果とする</li>
+<li>resultをFunctionBodyを評価した結果とする
+
+<ol>
+<li>[[Code]]内部プロパティがない、空のFunctionBodyなら(normal,undefined,empty)</li>
+</ol>
+</li>
+<li>実行コンテキスト復元</li>
+<li>result.type throwならresult.valueをスロー</li>
+<li>result.type returnならresult.valueを返す</li>
+<li>でなければresult.typeはnormalでなければならず、undefinedを返す</li>
+</ol>
+
+<h2>13.2.2 [[Construct]]</h2>
 
 <ul>
 <li>FunctionオブジェクトFに対する[[Construct]]内部メソッドが空となる可能性のある引数リストとともに呼び出されると、以下のステップが実行</li>
 </ul>
 
-<h1>13.2.3 [[ThrowTypeError]]</h1>
+<h2>13.2.3 [[ThrowTypeError]]</h2>
 
 <ul>
 <li>[[ThrowTypeError]]オブジェクトは以下のように一度だけ定義される唯一の関数オブジェクトである</li>
