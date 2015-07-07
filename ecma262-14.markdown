@@ -57,7 +57,7 @@ FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBo
 
 #### 注釈
 
-* 再帰呼出しが可能なのようにFunctionExpressionの識別子はFunctionExpressionのFunctionBody内から参照されうる
+* 再帰呼出しが可能なようにFunctionExpressionの識別子はFunctionExpressionのFunctionBody内から参照されうる
 * FunctionExpression内のIdentifierはFunctionExpressionを取り囲むスコープからは参照されない
 
 ### 生成規則
