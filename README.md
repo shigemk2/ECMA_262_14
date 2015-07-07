@@ -7,3 +7,5 @@ https://ecma262reading.doorkeeper.jp/events/26705
 ```
 grip --gfm --export ecma262-14.markdown index.html
 ```
+
+使うのは [Grip](https://github.com/joeyespo/grip)
