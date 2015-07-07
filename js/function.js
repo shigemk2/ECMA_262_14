@@ -49,11 +49,3 @@ console.log(typeof(f3));
 // オブジェクト同士を連結してもstring
 var f4 = new String("123") + new String("4");
 console.log(typeof(f4));
-
-
-
-
-
-
-
-
